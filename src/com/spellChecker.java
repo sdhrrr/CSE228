@@ -38,9 +38,28 @@ public class spellChecker {
 
             System.out.println(suggest(spelling));
         }
-
+        in.close(); // could give an error 
     }
+    
+    private String suggest(String word) {
+        int minDistance = Integer.MAX_VALUE;
+        String suggestion = "";
+        
+        for (String dictWord : dic) {
+            
+            int distance = levenshteinDistance(word, dictWord);
+            
+            if (distance < minDistance) {
+                minDistance = distance;
+                suggestion = dictWord;
+            }
+        }
+        return suggestion;
+    }
+    
+    
     // =================================================
+
     private int levenshteinDistance(String word1, String word2) {
         int m = word1.length();
         int n = word2.length();
@@ -63,21 +82,6 @@ public class spellChecker {
         return dp[m][n];
     }
 
-    private String suggest(String word) {
-        int minDistance = Integer.MAX_VALUE;
-        String suggestion = "";
-        
-        for (String dictWord : dic) {
-
-            int distance = levenshteinDistance(word, dictWord);
-            
-            if (distance < minDistance) {
-                minDistance = distance;
-                suggestion = dictWord;
-            }
-        }
-        return suggestion;
-    }
     // =========================================================
 }
 
